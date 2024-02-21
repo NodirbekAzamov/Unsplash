@@ -1,0 +1,43 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.fotos {
+    display: flex;
+    gap: 20px;
+
+    .fotos_main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 20px;
+
+        .div_big {
+            position: relative;
+            min-height: 100px;
+            // img {
+            //     width: 100%;
+            // }
+            .fotos_hover {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                flex-direction: column;
+                justify-content: space-between;
+                display: none;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.449), transparent, rgba(0, 0, 0, 0.449));
+            }
+        }
+
+        .div_big:hover {
+            .fotos_hover {
+                display: flex;
+                transition: 0.9s;
+            }
+        }
+    }
+}
