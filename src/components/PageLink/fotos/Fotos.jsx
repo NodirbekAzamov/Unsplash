@@ -3,8 +3,13 @@ import "../fotos/fotos.scss"
 import { FaHeart } from 'react-icons/fa';
 import { IoIosAdd } from 'react-icons/io';
 import { HiArrowDown } from 'react-icons/hi';
+import SingleImg from './singleImg/SingleImg';
 export default function Fotos({ universal }) {
     const [activeHeart, setActiveHeart] = useState([])
+    const [single_active, setSingle_active] = useState(false)
+    const [imgIndex, setImageIndex] = useState(0)
+    const [singleFilter, setSingleFilter] = useState([])
+
     const toggleHeart = (index) => {
         setActiveHeart(prev => {
             const updatedHearts = [...prev];
@@ -12,6 +17,7 @@ export default function Fotos({ universal }) {
             return updatedHearts;
         });
     };
+
 
     let num = universal.length;
     let length1 = parseInt(num / 3);
@@ -21,13 +27,22 @@ export default function Fotos({ universal }) {
         (item, index) => index < length2 && length1 <= index
     );
     let editorialfilter3 = universal.filter((item, index) => index >= length2);
+
+    const singlePage = (index, value) => {
+        setSingle_active(true)
+        setImageIndex(index)
+        setSingleFilter(value)
+    }
+
     return (
         <div className=' fotos'>
             <div className='fotos_main '>
                 {
                     editorialfilter1?.map((item, index) => {
                         return <div key={index} className='div_big  min-h-[100px] '>
-                            <img src={item?.urls?.raw} alt="img"  className=' w-[100%] ' />
+                            <img src={item?.urls?.raw} alt="img" className=' w-[100%] ' />
+                            <div onClick={() => singlePage(index, editorialfilter1)} className='change_img'></div>
+
                             <div className='fotos_hover p-[20px] '>
                                 <div className='flex justify-end gap-[15px]'>
                                     <button onClick={() => toggleHeart(index)} className={` ${activeHeart[index] ? "bg-[red] text-[#fff] " : "bg-white "} flex justify-center items-center rounded-[5px] w-[35px] h-[35px] opacity-[0.9] hover:opacity-[1] `} >
@@ -56,6 +71,7 @@ export default function Fotos({ universal }) {
                     editorialfilter2?.map((item, index) => {
                         return <div key={index} className='div_big  min-h-[100px] '>
                             <img src={item?.urls?.raw} alt="img" className=' w-[100%] ' />
+                            <div onClick={() => singlePage(index, editorialfilter2)} className='change_img'></div>
                             <div className='fotos_hover p-[20px] '>
                                 <div className='flex justify-end gap-[15px]'>
                                     <button onClick={() => toggleHeart(index)} className={` ${activeHeart[index] ? "bg-[red] text-[#fff] " : "bg-white "} flex justify-center items-center rounded-[5px] w-[35px] h-[35px] opacity-[0.9] hover:opacity-[1] `} >
@@ -84,6 +100,7 @@ export default function Fotos({ universal }) {
                     editorialfilter3?.map((item, index) => {
                         return <div key={index} className='div_big  min-h-[100px] '>
                             <img src={item?.urls?.raw} alt="img" className=' w-[100%] ' />
+                            <div onClick={() => singlePage(index, editorialfilter3)} className='change_img'></div>
                             <div className='fotos_hover p-[20px] '>
                                 <div className='flex justify-end gap-[15px]'>
                                     <button onClick={() => toggleHeart(index)} className={` ${activeHeart[index] ? "bg-[red] text-[#fff] " : "bg-white "} flex justify-center items-center rounded-[5px] w-[35px] h-[35px] opacity-[0.9] hover:opacity-[1] `} >
@@ -106,6 +123,10 @@ export default function Fotos({ universal }) {
                         </div>
                     })
                 }
+            </div>
+
+            <div className=' absolute top-0 left-0'>
+                <SingleImg universal={singleFilter}  setImageIndex={setImageIndex} setSingle_active={setSingle_active} single_active={single_active} imgIndex={imgIndex} />
             </div>
         </div>
     )
